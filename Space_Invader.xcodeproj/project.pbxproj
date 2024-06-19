@@ -18,6 +18,7 @@
 		945FC6432C22B1CE00975FE7 /* Space_InvaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945FC6422C22B1CE00975FE7 /* Space_InvaderTests.swift */; };
 		945FC64D2C22B1CE00975FE7 /* Space_InvaderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945FC64C2C22B1CE00975FE7 /* Space_InvaderUITests.swift */; };
 		945FC64F2C22B1CE00975FE7 /* Space_InvaderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945FC64E2C22B1CE00975FE7 /* Space_InvaderUITestsLaunchTests.swift */; };
+		945FC65C2C22BF0000975FE7 /* NotoSerifKorean.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 945FC65B2C22BF0000975FE7 /* NotoSerifKorean.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		945FC6482C22B1CE00975FE7 /* Space_InvaderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Space_InvaderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		945FC64C2C22B1CE00975FE7 /* Space_InvaderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space_InvaderUITests.swift; sourceTree = "<group>"; };
 		945FC64E2C22B1CE00975FE7 /* Space_InvaderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Space_InvaderUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		945FC65B2C22BF0000975FE7 /* NotoSerifKorean.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NotoSerifKorean.ttf; sourceTree = "<group>"; };
+		945FC65D2C22BF9600975FE7 /* Space-Invader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Space-Invader-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,10 +105,12 @@
 		945FC6272C22B1CC00975FE7 /* Space_Invader */ = {
 			isa = PBXGroup;
 			children = (
+				945FC65D2C22BF9600975FE7 /* Space-Invader-Info.plist */,
 				945FC6282C22B1CC00975FE7 /* AppDelegate.swift */,
 				945FC62A2C22B1CC00975FE7 /* GameScene.sks */,
 				945FC62C2C22B1CC00975FE7 /* Actions.sks */,
 				945FC62E2C22B1CC00975FE7 /* GameScene.swift */,
+				945FC65B2C22BF0000975FE7 /* NotoSerifKorean.ttf */,
 				945FC6302C22B1CC00975FE7 /* GameViewController.swift */,
 				945FC6322C22B1CC00975FE7 /* Main.storyboard */,
 				945FC6352C22B1CE00975FE7 /* Assets.xcassets */,
@@ -235,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				945FC65C2C22BF0000975FE7 /* NotoSerifKorean.ttf in Resources */,
 				945FC62B2C22B1CC00975FE7 /* GameScene.sks in Resources */,
 				945FC6342C22B1CC00975FE7 /* Base in Resources */,
 				945FC6362C22B1CE00975FE7 /* Assets.xcassets in Resources */,
@@ -449,6 +455,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Space-Invader-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -477,6 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Space-Invader-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

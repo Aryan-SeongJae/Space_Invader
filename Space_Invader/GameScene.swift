@@ -9,6 +9,10 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var gameScore = 0
+    let scoreLabel = SKLabelNode(fileNamed: "NotoSerifKorean")
+    
+    
     let player = SKSpriteNode(imageNamed: "playerShip")
     
     
@@ -68,6 +72,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(player)
         
         
+        
+        
+        
         startNewLevel()
         
         
@@ -96,8 +103,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             
+            if Body2.node != nil {
+                spawnExplosion(spawnPosition: Body2.node!.position)
+            }
             
-            spawnExplosion(spawnPosition: Body2.node!.position)
+            
             Body1.node?.removeFromParent()
             Body2.node?.removeFromParent()
             
@@ -105,7 +115,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if Body1.categoryBitMask == PhysicsCategories.Bullet && Body2.categoryBitMask == PhysicsCategories.Enemy && (Body2.node?.position.y)!  < self.size.height {
             
-            spawnExplosion(spawnPosition: Body2.node!.position)
+            if Body2.node != nil {
+                spawnExplosion(spawnPosition: Body2.node!.position)
+            }
             
             Body1.node?.removeFromParent()
             Body2.node?.removeFromParent()
@@ -172,7 +184,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let explosion = SKSpriteNode(imageNamed: "explosion")
         explosion.position = spawnPosition
         explosion.zPosition = 3
+        explosion.setScale(0)
+        
         self.addChild(explosion)
+        
+        
+        let scaleIn = SKAction.scale(to: 1, duration: 0.1)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.1)
+        let delete = SKAction.removeFromParent()
+        
+        
+        let explosionSequence = SKAction.sequence([scaleIn, fadeOut, delete])
+        explosion.run(explosionSequence)
         
     }
     
