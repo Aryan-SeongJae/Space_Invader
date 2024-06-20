@@ -10,7 +10,8 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameScore = 0
-    let scoreLabel = SKLabelNode(fileNamed: "NotoSerifKorean")
+    var scoreLabel = SKLabelNode.init(text: "    Score: 0")
+    
     
     
     let player = SKSpriteNode(imageNamed: "playerShip")
@@ -71,11 +72,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(player)
         
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.fontSize = 70
+        scoreLabel.verticalAlignmentMode = .top
+        scoreLabel.position = CGPoint(x: self.size.width * 0.15, y: self.size.height * 0.9)
+        addChild(scoreLabel)
         
         
         
         
         startNewLevel()
+        
+        
+    }
+    
+    
+    func addScore() {
+        
+        gameScore += 1
+        scoreLabel.text = "Score \(gameScore)"
         
         
         
@@ -114,6 +129,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if Body1.categoryBitMask == PhysicsCategories.Bullet && Body2.categoryBitMask == PhysicsCategories.Enemy && (Body2.node?.position.y)!  < self.size.height {
+            
+            addScore()
             
             if Body2.node != nil {
                 spawnExplosion(spawnPosition: Body2.node!.position)
@@ -167,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(enemy)
         
         
-        let moveEnemy = SKAction.move(to: endPoint, duration: 0.75)
+        let moveEnemy = SKAction.move(to: endPoint, duration: 2)
         let deleteEnemy = SKAction.removeFromParent()
         let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy])
         enemy.run(enemySequence)
