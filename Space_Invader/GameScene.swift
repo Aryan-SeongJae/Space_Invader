@@ -10,7 +10,11 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameScore = 0
-    var scoreLabel = SKLabelNode.init(text: "    Score: 0")
+    var scoreLabel = SKLabelNode.init(fontNamed: "Chalkduster")
+    var levelNumber = 0
+    var livesLabel = SKLabelNode.init(fontNamed: "Chalkduster")
+    var livesNumber = 3
+    
     
     
     
@@ -69,15 +73,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody!.collisionBitMask = PhysicsCategories.None
         player.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
         player.physicsBody!.affectedByGravity = false
-        
         self.addChild(player)
         
-        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.fontSize = 70
-        scoreLabel.verticalAlignmentMode = .top
+        scoreLabel = SKLabelNode(text: "Score: 0")
+        scoreLabel.fontSize = 30
+        scoreLabel.fontColor = SKColor.white
         scoreLabel.position = CGPoint(x: self.size.width * 0.15, y: self.size.height * 0.9)
-        addChild(scoreLabel)
+        scoreLabel.verticalAlignmentMode = .top
+        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.zPosition = 100
+        self.addChild(scoreLabel)
         
+        
+        livesLabel.text = "Lives: 3"
+        livesLabel.fontSize = 30
+        livesLabel.fontColor = SKColor.white
+        livesLabel.position = CGPoint(x: self.size.width * 0.85, y: self.size.height * 0.9)
+        livesLabel.horizontalAlignmentMode = .right
+        livesLabel.verticalAlignmentMode = .top
+        livesLabel.zPosition = 100
+        self.addChild(livesLabel)
+    
         
         
         
@@ -86,11 +102,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func loseALife() {
+        livesNumber -= 1
+        livesLabel.text = "Lives: \(livesNumber)"
+        
+        
+        let scaleUp = SKAction.scale(to: 1.5, duration: 0.2)
+        let scaleDown = SKAction.scale(to: 1, duration: 0.2)
+        let scaleSequence = SKAction.sequence([scaleUp, scaleDown])
+        livesLabel.run (scaleSequence)
+        
+    }
+    
     
     func addScore() {
         
         gameScore += 1
         scoreLabel.text = "Score \(gameScore)"
+        
+        
+        if gameScore == 10 || gameScore == 25 || gameScore == 50 {
+        startNewLevel ()
+        }
         
         
         
@@ -186,7 +219,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let moveEnemy = SKAction.move(to: endPoint, duration: 2)
         let deleteEnemy = SKAction.removeFromParent()
-        let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy])
+        let loseALifeAction = SKAction.run(loseALife)
+        let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy, loseALifeAction])
         enemy.run(enemySequence)
         
         let dx = endPoint.x - startPoint.x
@@ -225,11 +259,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func startNewLevel() {
+        levelNumber+=1
+        
+        if self.action(forKey: "spawningEnemies") != nil {
+            
+            self.removeAction(forKey: "spawningEnemies")
+            
+        }
+        
+        var levelDuration = TimeInterval()
+        
+        switch levelNumber {
+        case 1: levelDuration = 3.0
+        case 2: levelDuration = 2.5
+        case 3: levelDuration = 2.0
+        case 4: levelDuration = 1.5
+        default:
+            levelDuration = 1.5
+            print("Cannot find level information.")
+        }
+        
+       
+        
         let spawn = SKAction.run(spawnEnemy)
-        let waitToSpawn = SKAction.wait(forDuration: 1)
-        let spawnSequence = SKAction.sequence([spawn, waitToSpawn])
+        let waitToSpawn = SKAction.wait(forDuration: levelDuration)
+        let spawnSequence = SKAction.sequence([waitToSpawn, spawn])
         let spawnForever = SKAction.repeatForever(spawnSequence)
-        self.run(spawnForever)
+        self.run(spawnForever, withKey: "spawningEnemies")
+        
         
     }
     
